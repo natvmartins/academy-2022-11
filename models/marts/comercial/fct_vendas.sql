@@ -64,7 +64,8 @@ with
 
     , transformed as (
         select
-             *
+            {{ dbt_utils.surrogate_key(['id_pedido', 'fk_produto']) }} as sk_vendas
+            , *
             , preco_da_unidade * quantidade as total_bruto
             , (1 - desconto) * preco_da_unidade * quantidade as total_liquido
         from joined
